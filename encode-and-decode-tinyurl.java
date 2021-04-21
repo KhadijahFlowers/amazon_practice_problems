@@ -1,19 +1,35 @@
 public class Codec {
-
+    String urls = "https://";
+    String url = "http://";
+    String original = "";
     // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
-        String url = "http://";
-        String domain = longUrl.substring(7, longUrl.length());
-        String shortUrl = url + domain;
-        return shortUrl;
+        int index = 0;
+        int slash = 0;
+        while (slash != 2 && index < longUrl.length()) {
+            if ("/".compareTo(longUrl.substring(index, index + 1)) == 0) {
+                slash += 1;
+            }
+            index += 1;
+        }
+        original = longUrl.substring(0, index);
+        String domain = longUrl.substring(index, longUrl.length());
+        return url + domain;
     }
 
     // Decodes a shortened URL to its original URL.
     public String decode(String shortUrl) {
-        String url = "https://";
-        String domain = shortUrl.substring(8, shortUrl.length());
-        String longUrl = url + domain;
-        return longUrl;
+        int index = 0;
+        int slash = 0;
+        while (slash != 2 && index < shortUrl.length()) {
+            if ("/".compareTo(shortUrl.substring(index, index + 1)) == 0) {
+                slash += 1;
+            }
+            index += 1;
+        }
+
+        String domain = shortUrl.substring(index, shortUrl.length());
+        return original + domain;
     }
 }
 
